@@ -1,6 +1,7 @@
+import os
 from typing import Union
 
-from lib.common.lua import LuaTable
+from lib.common.lua import LuaTable, validateLuaCode
 
 
 class Trigger:
@@ -14,10 +15,27 @@ class CustomTsuTrigger(Trigger):
         super(CustomTsuTrigger, self).__init__(luaTable)
         self._checkOn = self._triggerLuaTable['check']  # string enum: ['event', 'update']
         self._events = self._triggerLuaTable['events']  # list of trigger events
-        self._triggerFunction = self._triggerLuaTable['custom']  # custom trigger function as string
 
-    def getTriggerFunction(self) -> str:
-        return self._triggerFunction
+    @property
+    def triggerFunctionAsString(self) -> str:
+        return self._triggerLuaTable['custom']
+
+    @triggerFunctionAsString.setter
+    def triggerFunctionAsString(self, triggerFunctionAsString: str):
+        # validateLuaCode(triggerFunctionAsString)
+        self._triggerLuaTable['custom'] = triggerFunctionAsString
+
+    def exportTriggerFunctionToFile(self, directory: str, fileName: str = 'tsu.lua'):
+        filePath = os.path.join(directory, fileName)
+        with open(filePath, mode='w', encoding='utf8') as file:
+            file.write(self.triggerFunctionAsString)
+
+    def importTriggerFunctionFromFile(self, directory: str, fileName: str = 'tsu.lua'):
+        filePath = os.path.join(directory, fileName)
+        with open(filePath, mode='r', encoding='utf8') as file:
+            luaCodeAsString = file.read()
+            # validateLuaCode(luaCodeAsString)
+            self.triggerFunctionAsString = luaCodeAsString
 
 
 class CustomEventTrigger(Trigger):

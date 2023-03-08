@@ -38,3 +38,7 @@ def serializeLuaTable(luaTable: LuaTable, indentationLevel: int = 0) -> str:
 
 def _createEscapedString(givenString: str) -> str:
     return givenString.replace('\\', '\\\\').replace('\n', '\\n').replace('"', '\\"')
+
+
+def validateLuaCode(luaCodeAsString: str):
+    parseLuaTableFromString(luaCodeAsString)

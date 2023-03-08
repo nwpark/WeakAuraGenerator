@@ -3,14 +3,19 @@ import string
 from typing import List
 
 from lib.common.lua import getNestedLuaTables, serializeLuaTable, LuaTable, parseLuaTableFromString
+from lib.weakauras.actions import Actions
 from lib.weakauras.trigger import createTriggerFromLuaTable, TriggerSubType
 
 
-class WeakAura:
+class Aura:
     def __init__(self, allAurasLuaTable: LuaTable, auraName: str):
         self._luaTable = allAurasLuaTable[auraName]
+        self._auraName = auraName
         if not self._luaTable:
             raise KeyError('No aura found with name ' + auraName)
+
+    def getName(self) -> str:
+        return self._auraName
 
     def getCustomTextFunction(self) -> str:
         return self._luaTable['customText']
@@ -18,6 +23,12 @@ class WeakAura:
     def getTriggers(self) -> List[TriggerSubType]:
         triggerLuaTables = getNestedLuaTables(self._luaTable['triggers'])
         return [createTriggerFromLuaTable(luaTable) for luaTable in triggerLuaTables]
+
+    def getActions(self) -> Actions:
+        return Actions(self._luaTable['actions'])
+
+    def getConfig(self) -> LuaTable:
+        return self._luaTable['config']
 
     def cloneLuaTable(self, newAuraName: str) -> LuaTable:
         deepCopy = parseLuaTableFromString(self.serialize())

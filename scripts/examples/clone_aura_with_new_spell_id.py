@@ -1,10 +1,11 @@
 from lib.weakauras.weakauras import WeakAuras
 
-_savedAurasPath = 'C:/Program Files (x86)/World of Warcraft/_retail_/WTF/Account/YOUR_ACCOUNT_NAME/SavedVariables/WeakAuras.lua'
+_addonCodePath = 'C:/Program Files (x86)/World of Warcraft/_retail_/Interface/AddOns/WeakAuras'
+_savedVariablesPath = 'C:/Program Files (x86)/World of Warcraft/_retail_/WTF/Account/YOUR_ACCOUNT_NAME/SavedVariables/WeakAuras.lua'
 
 
 def run():
-    weakAuras = WeakAuras(_savedAurasPath)
+    weakAuras = WeakAuras(_addonCodePath, _savedVariablesPath)
 
     shadowfuryTracker = weakAuras.cloneExistingAura('Mortal Coil Tracker', 'Shadowfury Tracker')
     shadowfuryTracker.getTriggers()[0].setSpellName('30283')
@@ -13,7 +14,7 @@ def run():
     # feel free to add an implementation and submit a pull request!
     print(shadowfuryTracker.getDebugString())
 
-    weakAuras.saveChanges()
+    weakAuras.generateImporterForAura(shadowfuryTracker)
 
 
 if __name__ == '__main__':
