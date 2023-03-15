@@ -17,6 +17,14 @@ class Aura:
     def getName(self) -> str:
         return self._auraName
 
+    @property
+    def description(self) -> str:
+        return self._luaTable['desc']
+
+    @description.setter
+    def description(self, description: str):
+        self._luaTable['desc'] = description
+
     def getCustomTextFunction(self) -> str:
         return self._luaTable['customText']
 
@@ -40,5 +48,11 @@ class Aura:
     def serialize(self) -> str:
         return serializeLuaTable(self._luaTable)
 
+    def hashCode(self) -> str:
+        return str(hash(self.serialize()))
+
     def getDebugString(self) -> str:
         return self.serialize()
+
+    def printDebugString(self):
+        print(self.getDebugString())

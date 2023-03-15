@@ -21,9 +21,12 @@ class WeakAuras:
         self._allAurasLuaTable[newAuraName] = newAuraLuaTable
         return self.getAura(newAuraName)
 
-    def generateImporterForAura(self, aura: Aura):
-        aura_import.appendImporterToToc(self._addonCodePath + '/WeakAuras.toc')
-        aura_import.generateImporter(self._addonCodePath, aura)
+    def generateImporterForAura(self, aura: Aura, directory: str, luaFileName: str, tocFileName: str):
+        directory = directory or self._addonCodePath
+        luaFileName = luaFileName or 'AuraImporter.lua'
+        tocFileName = tocFileName or 'WeakAuras.toc'
+        aura_import.appendImporterToToc(directory, tocFileName, luaFileName)
+        aura_import.generateImporter(aura, directory, luaFileName)
 
     def getDebugString(self) -> str:
         return serializeLuaTable(self._allAurasLuaTable)

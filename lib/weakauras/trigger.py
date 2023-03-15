@@ -53,6 +53,32 @@ class CustomEventTrigger(Trigger):
             else:
                 self._duration = self._untriggerLuaTable['duration']  # integer
 
+    @property
+    def triggerFunctionAsString(self) -> str:
+        return self._triggerFunction
+
+    @triggerFunctionAsString.setter
+    def triggerFunctionAsString(self, triggerFunctionAsString: str):
+        self._triggerLuaTable['custom'] = triggerFunctionAsString
+
+    @property
+    def triggerEvents(self) -> str:
+        return self._triggerLuaTable['events']
+
+    @triggerEvents.setter
+    def triggerEvents(self, triggerEvents: str):
+        self._triggerLuaTable['events'] = triggerEvents
+
+    def importTriggerFunctionFromFile(self, directory: str, fileName: str = 'tsu.lua'):
+        filePath = os.path.join(directory, fileName)
+        with open(filePath, mode='r', encoding='utf8') as file:
+            self.triggerFunctionAsString = file.read()
+
+    def importTriggerEventsFromFile(self, directory: str, fileName: str):
+        filePath = os.path.join(directory, fileName)
+        with open(filePath, mode='r', encoding='utf8') as file:
+            self.triggerEvents = file.read()
+
 
 class SpellTrigger(Trigger):
     def __init__(self, luaTable: LuaTable):
@@ -72,8 +98,8 @@ def createTriggerFromLuaTable(luaTable: LuaTable) -> TriggerSubType:
         return _createCustomTriggerFromLuaTable(luaTable)
     elif triggerType == 'spell':
         return SpellTrigger(luaTable)
-    else:
-        raise NotImplementedError('Missing implementation for trigger type ' + triggerType)
+    # else:
+    #     raise NotImplementedError('Missing implementation for trigger type ' + triggerType)
 
 
 def _createCustomTriggerFromLuaTable(luaTable: LuaTable) -> TriggerSubType:
