@@ -12,9 +12,9 @@ function(event, ...)
     elseif event == "LFG_LIST_APPLICATION_STATUS_UPDATED" then
         local searchResultID, newStatus, oldStatus, groupName = ...
         aura_env:OnApplicationStatusUpdated(searchResultID, newStatus)
-    elseif event == "BGF_SHOW_OPTIONS" then
-        aura_env:ShowOptionsFrame()
-    elseif event == "BGF_HIDE_OPTIONS" then
-        aura_env:HideOptionsFrame()
+    elseif event == "BGF_ON_SEARCH_RESULTS_REFRESHED" then
+        aura_env:OnSearchResultsRefreshed()
+    elseif event == "BGF_ON_REFRESH_BACKOFF_EXPIRED" then
+        aura_env:OnRefreshBackoffExpired()
     end
 end

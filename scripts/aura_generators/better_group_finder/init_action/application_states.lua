@@ -6,25 +6,17 @@ function aura_env:OnApplicationStatusUpdated(searchResultID, status)
         return
     end
 
-    local activityId = self:GetActivityIDForSearchResult(searchResultID)
     local leaderName = self:GetLeaderInfoForSearchResult(searchResultID).name
+    if not leaderName then
+        return
+    end
     if status == "applied" then
-        self.cancelled[activityId] = false
-        self.declined[activityId] = false
-        if leaderName then
-            self.declined[leaderName] = false
-            self.cancelled[leaderName] = false
-        end
+        self.declined[leaderName] = false
+        self.cancelled[leaderName] = false
     elseif status == "cancelled" then
-        self.cancelled[activityId] = true
-        if leaderName then
-            self.cancelled[leaderName] = true
-        end
+        self.cancelled[leaderName] = true
     elseif status == "declined" then
-        self.declined[activityId] = true
-        if leaderName then
-            self.declined[leaderName] = true
-        end
+        self.declined[leaderName] = true
     end
 end
 
@@ -42,12 +34,10 @@ end
 
 function aura_env:IsApplicationCancelled(searchResultID)
     local leaderName = self:GetLeaderInfoForSearchResult(searchResultID).name
-    local activityId = self:GetActivityIDForSearchResult(searchResultID)
-    return self.cancelled[leaderName or activityId]
+    return leaderName and self.cancelled[leaderName]
 end
 
 function aura_env:IsApplicationDeclined(searchResultID)
     local leaderName = self:GetLeaderInfoForSearchResult(searchResultID).name
-    local activityId = self:GetActivityIDForSearchResult(searchResultID)
-    return self.declined[leaderName or activityId]
+    return leaderName and self.declined[leaderName]
 end

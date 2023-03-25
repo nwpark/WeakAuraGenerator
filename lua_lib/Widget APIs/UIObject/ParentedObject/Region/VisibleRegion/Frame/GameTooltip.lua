@@ -392,7 +392,7 @@ function GameTooltip:SetUpgradeItem() end
 --- @param index number
 --- Index of a buff or debuff on the unit
 --- @param filter self
---- A list of filters to use when resolving the index, separated by the pipe '|' character; e.g. "RAID|PLAYER" will query group buffs cast by the player (string) CANCELABLE - Show auras that can be cancelledHARMFUL - Show debuffs onlyHELPFUL - Show buffs onlyNOT_CANCELABLE - Show auras that cannot be cancelledPLAYER - Show auras the player has castRAID - Show auras the player can cast on party/raid members (as opposed to
+--- A list of filters to use when resolving the index, separated by the pipe '|' character; e.g. "RAID|PLAYER" will query group buffs cast by the player (string) CANCELABLE - Show aura_generators that can be cancelledHARMFUL - Show debuffs onlyHELPFUL - Show buffs onlyNOT_CANCELABLE - Show aura_generators that cannot be cancelledPLAYER - Show aura_generators the player has castRAID - Show aura_generators the player can cast on party/raid members (as opposed to
 function GameTooltip:SetUnitAura(unit, index , filter) end
 
 --- Fills the tooltip with information about a buff on a unit. This method is an alias for :SetUnitAura() with a built-in HELPFUL filter (which cannot be removed or negated with the HARMFUL filter).
@@ -401,7 +401,7 @@ function GameTooltip:SetUnitAura(unit, index , filter) end
 --- @param index number
 --- Index of a buff or debuff on the unit
 --- @param filter self
---- A list of filters to use when resolving the index, separated by the pipe '|' character; e.g. "RAID|PLAYER" will query group buffs cast by the player (string) CANCELABLE - Show auras that can be cancelledNOT_CANCELABLE - Show auras that cannot be cancelledPLAYER - Show auras the player has castRAID - Show auras the player can cast on party/raid members (as opposed to
+--- A list of filters to use when resolving the index, separated by the pipe '|' character; e.g. "RAID|PLAYER" will query group buffs cast by the player (string) CANCELABLE - Show aura_generators that can be cancelledNOT_CANCELABLE - Show aura_generators that cannot be cancelledPLAYER - Show aura_generators the player has castRAID - Show aura_generators the player can cast on party/raid members (as opposed to
 function GameTooltip:SetUnitBuff(unit, index , filter) end
 
 --- Fills the tooltip with information about an item offered for trade by the target. See :SetTradePlayerItem() for items to be traded away by the player.

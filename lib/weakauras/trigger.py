@@ -1,7 +1,7 @@
 import os
 from typing import Union
 
-from lib.common.lua import LuaTable, validateLuaCode
+from lib.common.lua import LuaTable, createLuaArray, serializeLuaTable
 
 
 class Trigger:
@@ -88,7 +88,20 @@ class SpellTrigger(Trigger):
         self._triggerLuaTable['spellName'] = spellName
 
 
-TriggerSubType = Union[CustomTsuTrigger, CustomEventTrigger, SpellTrigger]
+class AuraTrigger(Trigger):
+    def __init__(self, luaTable: LuaTable):
+        super().__init__(luaTable)
+
+    @property
+    def auraNames(self) -> LuaTable:
+        return self._triggerLuaTable['auranames']
+
+    @auraNames.setter
+    def auraNames(self, auraNames: list[str]):
+        self._triggerLuaTable['auranames'] = createLuaArray(auraNames)
+
+
+TriggerSubType = Union[CustomTsuTrigger, CustomEventTrigger, SpellTrigger, AuraTrigger]
 
 
 def createTriggerFromLuaTable(luaTable: LuaTable) -> TriggerSubType:
@@ -98,8 +111,10 @@ def createTriggerFromLuaTable(luaTable: LuaTable) -> TriggerSubType:
         return _createCustomTriggerFromLuaTable(luaTable)
     elif triggerType == 'spell':
         return SpellTrigger(luaTable)
-    # else:
-    #     raise NotImplementedError('Missing implementation for trigger type ' + triggerType)
+    elif triggerType == 'aura2':
+        return AuraTrigger(luaTable)
+    else:
+        raise NotImplementedError('Missing implementation for trigger type ' + triggerType)
 
 
 def _createCustomTriggerFromLuaTable(luaTable: LuaTable) -> TriggerSubType:

@@ -30,3 +30,20 @@ aura_env.AFFIX_IDS = {
     TYRANNICAL = 9,
     FORTIFIED = 10,
 }
+
+aura_env.WARNING_ICON = [[Interface/EncounterJournal/UI-EJ-WarningTextIcon]]
+--aura_env.WARNING_ICON = [[Interface/buttons/adventureguidemicrobuttonalert.blp]]
+--aura_env.WARNING_ICON = [[Interface/DialogFrame/DialogAlertIcon]]
+
+aura_env.PROBLEMATIC_ADDON_WARNINGS = {
+    ["PremadeGroupsFilter"] = "Addon detected: \"Premade Groups Filter\""
+}
+
+-- todo replace with uid instead of key
+aura_env.PROBLEMATIC_WEAK_AURA_WARNINGS = {
+    ["Dungeon RIO and Class"] = "WeakAura detected: \"Dungeon RIO and Class\"",
+    ["Better R.IO With Colors and Best Key"] = "WeakAura detected: \"Better R.IO With Colors and Best Key\"",
+    ["Better LFG Class Colors"] = "WeakAura detected: \"Better LFG Class Colors\"",
+    ["Group Finder Custom Extension"] = "WeakAura detected: \"Group Finder Custom Extension\"",
+    ["Dungeon RIO and Class - Extended"] = "WeakAura detected: \"Dungeon RIO and Class - Extended\"",
+}

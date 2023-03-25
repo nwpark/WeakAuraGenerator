@@ -1,3 +1,4 @@
+import os
 from typing import List, Dict
 
 import lupa
@@ -12,8 +13,21 @@ def parseLuaTableFromString(luaTableStr: str) -> LuaTable:
     return _luaRuntime.eval(luaTableStr)
 
 
+def parseLuaTableFromFile(directory: str, fileName: str) -> LuaTable:
+    filePath = os.path.join(directory, fileName)
+    with open(filePath, mode='r', encoding='utf8') as file:
+        return parseLuaTableFromString(file.read())
+
+
 def getNestedLuaTables(luaTable: LuaTable) -> List[LuaTable]:
     return [luaTable[key] for key in luaTable if lupa.lua_type(luaTable[key]) == 'table']
+
+
+def createLuaArray(values: list) -> LuaTable:
+    luaTable = _luaRuntime.table(len(values))
+    for i in range(len(values)):
+        luaTable[i + 1] = values[i]
+    return luaTable
 
 
 def serializeLuaTable(luaTable: LuaTable, indentationLevel: int = 0) -> str:

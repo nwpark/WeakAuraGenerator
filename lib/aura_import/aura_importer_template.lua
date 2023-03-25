@@ -1,6 +1,6 @@
 local _, Private = ...
 
-AuraImporter = LibStub("AceAddon-3.0"):NewAddon("AuraImporter", "AceConsole-3.0")
+AuraImporter = AuraImporter or LibStub("AceAddon-3.0"):NewAddon("AuraImporter", "AceConsole-3.0")
 
 local function onAddonLoaded()
     if Private.IsAuraUpToDate("AURA_NAME", "AURA_HASH") then

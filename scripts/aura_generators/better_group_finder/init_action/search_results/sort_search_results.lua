@@ -11,8 +11,6 @@ function aura_env:SortSearchResults(searchResults)
         else
             return searchResultID1 > searchResultID2
         end
-
-        return searchResultID1 > searchResultID2
     end)
 end
 

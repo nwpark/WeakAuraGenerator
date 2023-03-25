@@ -11,11 +11,19 @@ end
 function aura_env:UpdateSearchEntryName(searchEntry)
     local searchEntryName = searchEntry.Name:GetText()
     local applicatonState = self:GetApplicationState(searchEntry.resultID)
-    local rioScore = self:GetLeaderInfoForSearchResult(searchEntry.resultID).rioScore
+    local leaderInfo = self:GetLeaderInfoForSearchResult(searchEntry.resultID)
+    local rioScore = leaderInfo.rioScore
+    local mainRioScore = leaderInfo.mainRioScore
 
     if rioScore then
-        searchEntryName = "[" .. self:FormatRioScore(rioScore) ..  "] " .. searchEntryName
+        if mainRioScore then
+            searchEntryName = "[" .. self:FormatRioScore(rioScore) .. "/" .. self:FormatRioScore(mainRioScore) ..  "] " .. searchEntryName
+        else
+            searchEntryName = "[" .. self:FormatRioScore(rioScore) ..  "] " .. searchEntryName
+        end
     end
+
+    --searchEntryName = "(" .. tostring(searchEntry.resultID) ..  ") " .. searchEntryName
 
     if applicatonState ~= self.OKAY then
         searchEntryName = applicatonState .. " " .. searchEntryName

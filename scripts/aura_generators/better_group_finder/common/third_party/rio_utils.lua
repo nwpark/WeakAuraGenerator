@@ -1,12 +1,21 @@
 function aura_env:GetRioScore(playerName)
+    local keystoneProfile = self:GetRioKeystoneProfile(playerName)
+    return keystoneProfile and keystoneProfile.currentScore
+end
+
+function aura_env:GetMainRioScore(playerName)
+    local keystoneProfile = self:GetRioKeystoneProfile(playerName)
+    return keystoneProfile
+            and keystoneProfile.mainCurrentScore
+            and keystoneProfile.mainCurrentScore > 0
+            and keystoneProfile.mainCurrentScore
+end
+
+function aura_env:GetRioKeystoneProfile(playerName)
     local normalizedPlayerName = self:GetNormalizedPlayerName(playerName)
     local playerFactionID = self:GetPlayerFactionID()
     local playerProfile = RaiderIO and RaiderIO.GetProfile(normalizedPlayerName, playerFactionID)
-    if not (playerProfile and playerProfile.mythicKeystoneProfile) then
-        return nil
-    end
-
-    return playerProfile.mythicKeystoneProfile.currentScore
+    return playerProfile and playerProfile.mythicKeystoneProfile
 end
 
 function aura_env:FormatRioScore(rioScore)

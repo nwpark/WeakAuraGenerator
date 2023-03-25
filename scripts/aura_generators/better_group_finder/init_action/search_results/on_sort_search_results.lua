@@ -6,5 +6,7 @@ function aura_env:OnLFGListUtil_SortSearchResults(searchResults)
     self:FilterSearchResults(searchResults)
     self:SortSearchResults(searchResults)
 
+    LFGListFrame.SearchPanel.results = searchResults
+    LFGListFrame.SearchPanel.totalResults = #searchResults
     LFGListSearchPanel_UpdateResults(LFGListFrame.SearchPanel)
 end

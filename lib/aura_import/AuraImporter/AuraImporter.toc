@@ -1,0 +1,10 @@
+## Interface: 100005
+## Version: 10.0.5
+## Title: AuraImporter
+## Notes: WeakAura Importer
+## Author: Nick Park
+## SavedVariables: AuraImporterSaved
+
+embeds.xml
+
+AuraVersionCheck.lua

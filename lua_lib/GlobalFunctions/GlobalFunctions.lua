@@ -5538,7 +5538,7 @@ end
 function GetNumScenarios()
 end
 
---- Returns the number of shapeshift buttons (stances for Warriors, auras for Paladins, forms for Druids, etc) the player currently has.
+--- Returns the number of shapeshift buttons (stances for Warriors, aura_generators for Paladins, forms for Druids, etc) the player currently has.
 --- [https://wowpedia.fandom.com/wiki/API_GetNumShapeshiftForms]
 --- @return void
 function GetNumShapeshiftForms()
@@ -12450,7 +12450,7 @@ end
 function UnitAuraBySlot(unit, slot)
 end
 
---- Returns an ordered list of auras used with UnitAuraBySlot()
+--- Returns an ordered list of aura_generators used with UnitAuraBySlot()
 --- [https://wowpedia.fandom.com/wiki/API_UnitAuraSlots]
 --- @param unit string @ UnitId
 --- @param filter string @ Similar to UnitAura; however, either HELPFUL or HARMFUL is required.

@@ -4,22 +4,43 @@ from typing import List
 
 from lib.common.lua import getNestedLuaTables, serializeLuaTable, LuaTable, parseLuaTableFromString
 from lib.weakauras.actions import Actions
+from lib.weakauras.author_options import AuthorOptions
 from lib.weakauras.trigger import createTriggerFromLuaTable, TriggerSubType
 
 
 class Aura:
-    def __init__(self, allAurasLuaTable: LuaTable, auraName: str):
-        self._luaTable = allAurasLuaTable[auraName]
+    def __init__(self, luaTable: LuaTable, auraName: str):
+        self._luaTable = luaTable
         self._auraName = auraName
-        if not self._luaTable:
-            raise KeyError('No aura found with name ' + auraName)
 
     def getName(self) -> str:
         return self._auraName
 
     @property
+    def luaTable(self) -> LuaTable:
+        return self._luaTable
+
+    @property
+    def name(self) -> str:
+        return self._auraName
+
+    @name.setter
+    def name(self, name: str):
+        self._auraName = name
+
+    @property
     def description(self) -> str:
         return self._luaTable['desc']
+
+    @property
+    def textSubRegions(self) -> list[LuaTable]:
+        subRegionLuaTables = getNestedLuaTables(self._luaTable['subRegions'])
+        return [subRegion for subRegion in subRegionLuaTables if subRegion['type'] == 'subtext']
+
+    @property
+    def triggers(self) -> List[TriggerSubType]:
+        triggerLuaTables = getNestedLuaTables(self._luaTable['triggers'])
+        return [createTriggerFromLuaTable(luaTable) for luaTable in triggerLuaTables]
 
     @description.setter
     def description(self, description: str):
@@ -28,12 +49,14 @@ class Aura:
     def getCustomTextFunction(self) -> str:
         return self._luaTable['customText']
 
-    def getTriggers(self) -> List[TriggerSubType]:
-        triggerLuaTables = getNestedLuaTables(self._luaTable['triggers'])
-        return [createTriggerFromLuaTable(luaTable) for luaTable in triggerLuaTables]
-
     def getActions(self) -> Actions:
         return Actions(self._luaTable['actions'])
+
+    def getAuthorOptions(self) -> AuthorOptions:
+        return AuthorOptions(self._luaTable['authorOptions'])
+
+    def setAuthorOptions(self, authorOptions: AuthorOptions):
+        self._luaTable['authorOptions'] = authorOptions
 
     def getConfig(self) -> LuaTable:
         return self._luaTable['config']
